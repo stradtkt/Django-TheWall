@@ -7,10 +7,22 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 {% load staticfiles %}
-<link rel="stylesheet" href="{% static 'app/css/app.css' %}">
+<link rel="stylesheet" href="{% static 'wall/css/app.css' %}">
 <title>{% block title %}The Wall{% endblock %}</title>
 </head>
 <body>
+
+<nav class="navbar">
+    <span class="navbar-brand h1 text-white">The Wall</span>
+    <ul class="nav pull-right">
+        <li class="nav-item"><a href="/wall" class="nav-link">Wall</a></li>
+        {% if 'id' in request.session %}
+        <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+        {% else %}
+        <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
+        {% endif %}
+    </ul>
+</nav>
 
 <div class="container">
     {% block body %}{% endblock %}

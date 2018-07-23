@@ -2,7 +2,19 @@
 {% block title %}{{block.super}} | Home {% endblock%}
 {% block body %}
 
-
+<div class="row">
+        <div class="col-lg-6 offset-3">
+                {% if messages %}
+                <ul class="messages mt-4">
+                    {% for message in messages %}
+                        <li{% if message.tags == "error" %} class="bg-danger text-white" 
+                        {% elif message.tags == "success" %} class="bg-success text-white"
+                        {% endif %}>{{message}}</li><br>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
 
 <div class="row">
     <div class="col-md-6 mt-5 text-center">

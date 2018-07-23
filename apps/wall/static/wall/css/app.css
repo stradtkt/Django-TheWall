@@ -1,0 +1,7 @@
+.navbar {
+    background: linear-gradient(120deg, rgba(10,10,220,0.5), rgba(100,100,220,0.9)) !important;
+}
+ul li a {
+    text-decoration: none;
+    color: white;
+}

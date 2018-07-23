@@ -6,4 +6,5 @@ urlpatterns = [
     url(r'^wall$', views.wall),
     url(r'^login$', views.login),
     url(r'^register$', views.register),
+    url(r'^process_post$', views.process_post),
 ]

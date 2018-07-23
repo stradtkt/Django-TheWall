@@ -5,6 +5,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from .models import *
+from .forms import *
 import datetime
 import bcrypt
 
@@ -13,7 +15,11 @@ def index(request):
     return render(request, 'wall/index.html')
 
 def wall(request):
-    return render(request, 'wall/the-wall.html')
+    context = {
+        "form": PostForm(),
+        "posts": Post.objects.all()
+    }
+    return render(request, 'wall/the-wall.html', context)
 
 def login(request):
     email = request.POST['email']
@@ -23,7 +29,7 @@ def login(request):
         is_pass = bcrypt.checkpw(password.encode(), user[0].password.encode())
         if is_pass:
             request.session['id'] = user[0].id
-            return redirect('/')
+            return redirect('/wall')
         else:
             messages.error(request, "Incorrect email and/or password")
             return redirect('/login')
@@ -35,7 +41,7 @@ def register(request):
     errors = User.objects.validate_user(request.POST)
     if len(errors):
         for tag, error in errors.iteritems():
-            messages.error(request, error, extra_tags=tag)
+            messages.error(request, error)
         return redirect('/register')
     else:
         first_name = request.POST['first_name']
@@ -44,6 +50,11 @@ def register(request):
         password = request.POST['password']
         hashed_pw = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
         User.objects.create(first_name=first_name, last_name=last_name, email=email, password=hashed_pw)
-        user = User.objects.get(email=email)
-        request.session['id'] = user.id
         return redirect('/')
+
+def process_post(request):
+    title = request.POST['title']
+    content = request.POST['content']
+    Post.objects.create(title=title, content=content)
+    messages.success(request, 'Add Post Successfully')
+    return redirect('/wall')
