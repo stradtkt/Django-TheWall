@@ -13,3 +13,19 @@ div.comments {
     margin-right: auto;
     width: 50%;
 }
+div.list-group {
+    background: linear-gradient(90deg, rgba(200,200,200,0.5), rgba(200,200,200,0.9));
+    box-shadow: 3px 3px 6px rgba(50,50,50,0.5);
+    margin-bottom: 10px;
+    padding-top: 3px;
+}
+form .post-form {
+    width: 320px;
+    margin: 0 auto;
+}
+form .post-form input,
+form .post-form textarea {
+    width: 100%;
+    margin: 0 auto;
+    box-shadow: 3px -1px 6px rgba(50,50,50,0.5);
+}

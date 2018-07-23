@@ -17,11 +17,11 @@ def index(request):
 
 def wall(request):
     posts = Post.objects.all()
-    comments = Comment.objects.all()
+    # comments = Comment.objects.all()
     context = {
         "form": PostForm(),
         "posts": posts,
-        "comments": comments
+        # "comments": comments
     }
     return render(request, 'wall/the-wall.html', context)
 

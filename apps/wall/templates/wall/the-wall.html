@@ -27,8 +27,8 @@
                     <small>{{post.created_at}}</small>
                     </div>
                     <p class="mb-1">{{post.content}}</p>
-                    {% for comment in post.comments %}
-                    <small><b>{{post.comment.count}}</b></small>
+                    {% for comment in post.comments.all %}
+                    <small><b>{{post.comments.count}}</b></small>
                     {% endfor %}
                 </a> 
             </div>
@@ -39,7 +39,9 @@
         <h3>Add To The Wall</h3>
         <form action="process_post" method="POST">
             {% csrf_token %}
-            {{form.as_p}}
+            <div class="post-form">
+                {{form.as_p}}
+            </div>
             <input type="submit" value="Submit" class="btn btn-primary">
         </form>
     </div>
