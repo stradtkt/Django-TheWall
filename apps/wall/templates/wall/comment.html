@@ -1,0 +1,43 @@
+{% extends 'wall/layout.html' %}
+{% block title %}{{block.super}} | Comments {% endblock%}
+{% block body %}
+
+<div class="row">
+        <div class="col-lg-6 offset-3">
+                {% if messages %}
+                <ul class="messages mt-4">
+                    {% for message in messages %}
+                        <li{% if message.tags == "error" %} class="bg-danger text-white" 
+                        {% elif message.tags == "success" %} class="bg-success text-white"
+                        {% endif %}>{{message}}</li><br>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="post text-center">
+            <h1>{{post.title}}</h1>
+            <p>{{post.content}}</p>
+            <small>{{post.created_at}}</small>
+        </div>
+        <div class="comments text-center">
+            {% for comment in comments %}
+            <p class="lead">{{comment.users.first_name}} {{comments.users.last_name}}</p>
+            <p class="text-primary">{{comment.content}}</p>
+            <small><b>{{comment.created_at}}</b></small>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-md-4">
+        <form action="comment/{{post.id}}/process_comment" method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="Send" class="btn btn-primary">
+        </form>
+    </div>
+</div>
+
+{% endblock %}

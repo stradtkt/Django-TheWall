@@ -3,11 +3,25 @@
 {% block body %}
 
 <div class="row">
+        <div class="col-lg-6 offset-3">
+                {% if messages %}
+                <ul class="messages mt-4">
+                    {% for message in messages %}
+                        <li{% if message.tags == "error" %} class="bg-danger text-white" 
+                        {% elif message.tags == "success" %} class="bg-success text-white"
+                        {% endif %}>{{message}}</li><br>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+
+<div class="row">
     <div class="col-lg-8">
         <div class="post text-center">
             {% for post in posts %}
                 <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <a href="{{post.id}}/comment" class="list-group-item list-group-item-action flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">{{post.title}}</h5>
                     <small>{{post.created_at}}</small>

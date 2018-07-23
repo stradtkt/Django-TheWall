@@ -45,9 +45,29 @@ class User(models.Model):
     def __str__(self):
         return first_name + " " + last_name
 
+class PostManager(models.Manager):
+    def validate_post(self, postData):
+        if len(postData['title']) < 2:
+            errors['title'] = "Your title needs to be 2 or more characters"
+        return errors
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+class CommentManager(models.Manager):
+    def validate_comment(self, postData):
+        errors = {}
+        if len(postData['content']) < 3:
+            errors['content'] = "The content for the post has to be 3 or more characters"
+        return errors
+
+class Comment(models.Model):
+    content = models.TextField()
+    posts = models.ForeignKey(Post, related_name="comments")
+    users = models.ForeignKey(User, related_name="publisher")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    objects = CommentManager()

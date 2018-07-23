@@ -58,3 +58,32 @@ def process_post(request):
     Post.objects.create(title=title, content=content)
     messages.success(request, 'Add Post Successfully')
     return redirect('/wall')
+
+def comment_view(request, id):
+    post = Post.objects.get(id=id)
+    comments = Comment.objects.filter(posts=post).order_by("-created_at")
+    form = CommentForm()
+    context = {
+        "post": post,
+        "form": form,
+        "comments": comments
+    }
+    return render(request, 'wall/comment.html', context)
+
+def process_comment(request, id):
+    errors = Review.objects.validate_comment(request.POST)
+    if len(errors):
+        for tag, error in errors.iteritems():
+            messages.error(request, error)
+        return redirect('{}/comment'.format(id))
+    else:
+        content = request.POST['content']
+        users = User.objects.get(id=request.session['id'])
+        posts = Post.objects.get(id=id)
+        Comment.objects.create(content=content, posts=posts, users=users)
+        messages.success(request, 'Comment Successfully Added')
+        return redirect('{}/comment'.format(id))
+    
+
+    
+    
