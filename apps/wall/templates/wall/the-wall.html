@@ -27,8 +27,10 @@
                     <small>{{post.created_at}}</small>
                     </div>
                     <p class="mb-1">{{post.content}}</p>
-                    <small></small>
-                </a>
+                    {% for comment in post.comments %}
+                    <small><b>{{post.comment.count}}</b></small>
+                    {% endfor %}
+                </a> 
             </div>
             {% endfor %}
         </div>

@@ -23,13 +23,13 @@
             <p>{{post.content}}</p>
             <small>{{post.created_at}}</small>
         </div>
-        <div class="comments text-center">
             {% for comment in comments %}
-            <p class="lead">{{comment.users.first_name}} {{comments.users.last_name}}</p>
-            <p class="text-primary">{{comment.content}}</p>
-            <small><b>{{comment.created_at}}</b></small>
+            <div class="comments text-center">
+                <p class="lead">{{comment.users.first_name}} {{comment.users.last_name}}</p>
+                <p class="text-primary">{{comment.content}}</p>
+                <small><b>{{comment.created_at}}</b></small>
+            </div>
             {% endfor %}
-        </div>
     </div>
     <div class="col-md-4">
         <form action="/{{post.id}}/comment/process_comment" method="POST">

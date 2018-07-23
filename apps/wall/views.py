@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from django.db.models import Count
 from .models import *
 from .forms import *
 import datetime
@@ -15,9 +16,12 @@ def index(request):
     return render(request, 'wall/index.html')
 
 def wall(request):
+    posts = Post.objects.all()
+    comments = Comment.objects.all()
     context = {
         "form": PostForm(),
-        "posts": Post.objects.all()
+        "posts": posts,
+        "comments": comments
     }
     return render(request, 'wall/the-wall.html', context)
 
@@ -75,14 +79,14 @@ def process_comment(request, id):
     if len(errors):
         for tag, error in errors.iteritems():
             messages.error(request, error)
-        return redirect('{}/comment'.format(id))
+        return redirect('/{}/comment'.format(id))
     else:
         content = request.POST['content']
         users = User.objects.get(id=request.session['id'])
         posts = Post.objects.get(id=id)
         Comment.objects.create(content=content, posts=posts, users=users)
         messages.success(request, 'Comment Successfully Added')
-        return redirect('{}/comment'.format(id))
+        return redirect('/{}/comment'.format(id))
     
 
     
