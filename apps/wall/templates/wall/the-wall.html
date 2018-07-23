@@ -9,7 +9,7 @@
                     {% for message in messages %}
                         <li{% if message.tags == "error" %} class="bg-danger text-white" 
                         {% elif message.tags == "success" %} class="bg-success text-white"
-                        {% endif %}>{{message}}</li><br>
+                        {% endif %}>{{message}} <span><i class="fal fa-close"></i></span></li><br>
                     {% endfor %}
                 </ul>
             {% endif %}
@@ -27,7 +27,7 @@
                     <small>{{post.created_at}}</small>
                     </div>
                     <p class="mb-1">{{post.content}}</p>
-                    <small><b>{{post.comments.count}}</b></small>
+                    <small><b>Comments: {{post.comments.count}}</b></small>
                 </a> 
             </div>
             {% endfor %}
@@ -44,6 +44,5 @@
         </form>
     </div>
 </div>
-
 
 {% endblock %}

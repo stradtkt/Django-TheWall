@@ -28,6 +28,9 @@
                 <p class="lead">{{comment.users.first_name}} {{comment.users.last_name}}</p>
                 <p class="text-primary">{{comment.content}}</p>
                 <small><b>{{comment.created_at}}</b></small>
+                {% if comment.users.id == request.session.id %}
+                <a href="/{{post.id}}/comment/{{comment.id}}/delete" class="btn btn-danger"><i class="far fa-close"></i></a>
+                {% endif %}
             </div>
             {% endfor %}
     </div>

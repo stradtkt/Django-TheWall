@@ -88,6 +88,10 @@ def process_comment(request, id):
         messages.success(request, 'Comment Successfully Added')
         return redirect('/{}/comment'.format(id))
     
-
+def delete_comment(request, comment_id, post_id):
+    comment = Comment.objects.get(id=comment_id)
+    comment.delete()
+    messages.success(request, 'Comment Deleted')
+    return redirect('/{}/comment'.format(post_id))
     
     
