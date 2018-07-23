@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="col-md-4">
-        <form action="comment/{{post.id}}/process_comment" method="POST">
+        <form action="/{{post.id}}/comment/process_comment" method="POST">
             {% csrf_token %}
             {{form.as_p}}
             <input type="submit" value="Send" class="btn btn-primary">

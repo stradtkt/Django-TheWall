@@ -71,7 +71,7 @@ def comment_view(request, id):
     return render(request, 'wall/comment.html', context)
 
 def process_comment(request, id):
-    errors = Review.objects.validate_comment(request.POST)
+    errors = Comment.objects.validate_comment(request.POST)
     if len(errors):
         for tag, error in errors.iteritems():
             messages.error(request, error)
